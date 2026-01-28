@@ -206,7 +206,8 @@ export function TourPortfolioSection() {
               transition-all duration-300 shadow-[0_0_20px_rgba(249,115,22,0.3)]
               hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] hover:-translate-y-1
               flex items-center gap-3 mx-auto mt-16"
-            >
+            aria-label='Quero a Imersão 360°'
+          >
             <MessageCircle className="w-6 h-6" />
             Quero a Imersão 360°
           </Button>

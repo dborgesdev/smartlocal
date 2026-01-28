@@ -17,7 +17,7 @@ const ReviewCard = ({ client }: { client: Client }) => (
         {client.logoUrl ? (
           <img 
             src={client.logoUrl} 
-            alt={client.name} 
+            alt={`Logo ${client.name} cliente Smart Local`} 
             className="h-10 w-10 object-contain brightness-0 invert opacity-90"
             onError={(e) => {
               // Se a imagem falhar (404), esconde ela e deixa o fundo com as iniciais

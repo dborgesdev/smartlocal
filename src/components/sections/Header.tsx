@@ -77,6 +77,7 @@ export function Header() {
           <Button
             variant="outline"
             className={'gap-2 transition-all border-primary text-primary hover:bg-primary hover:text-primary-foreground'}
+            aria-label='Fale no WhatsApp'
             // className={`gap-2 transition-all ${
             //   isScrolled
             //     ? 'border-primary text-primary hover:bg-primary hover:text-primary-foreground'

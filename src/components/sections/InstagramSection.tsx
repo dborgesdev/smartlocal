@@ -129,7 +129,10 @@ export function InstagramSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] hover:opacity-90 text-white gap-2 px-10 py-7 text-lg transition-all shadow-x">
+            <Button 
+              className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] hover:opacity-90 text-white gap-2 px-10 py-7 text-lg transition-all shadow-x"
+              aria-label='Seguir no Instagram'
+            >
               <InstagramIcon className="w-8 h-8" />
               Seguir no Instagram
             </Button>

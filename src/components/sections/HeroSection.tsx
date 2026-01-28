@@ -79,6 +79,7 @@ export function HeroSection() {
                 <Button 
                   size="lg" 
                   className="bg-secondary hover:bg-secondary-hover text-white text-lg px-8 py-6 pulse-glow w-full sm:w-auto shadow-xl"
+                  aria-label='Solicitar diagnóstico gratuito de SEO Local'
                 >
                   <MessageCircle className="w-6 h-6" />
                   Solicitar Diagnóstico Gratuito
@@ -98,6 +99,7 @@ export function HeroSection() {
                 size="lg" 
                 variant="outline" 
                 className="border-white/30 text-primary hover:bg-white/10 text-lg px-8 py-6 gap-2 w-full sm:w-auto backdrop-blur-sm"
+                aria-label='Ver portfólio de Tour Virtual 360 graus'
               >
                 Ver Experiência 360°
                 <ArrowDown className="w-5 h-5" />

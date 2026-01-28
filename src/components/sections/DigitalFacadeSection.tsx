@@ -39,11 +39,12 @@ export function DigitalFacadeSection() {
                 rel="noopener noreferrer"
             >
                 <Button 
-                size='lg'
-                className="bg-secondary hover:bg-secondary-hover text-white px-10 py-7 rounded-xl font-bold text-lg 
+                  size='lg'
+                  className="bg-secondary hover:bg-secondary-hover text-white px-10 py-7 rounded-xl font-bold text-lg 
                     transition-all duration-300 shadow-[0_0_20px_rgba(249,115,22,0.3)]
                     hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] hover:-translate-y-1
                     flex items-center gap-3 mx-auto"
+                  aria-label='Parar de Perder Clientes'
                 >
                 <MessageCircle className="w-6 h-6" />
                 Parar de Perder Clientes
