@@ -16,7 +16,6 @@ import { InstagramSection } from '@/components/sections/InstagramSection';
 import { Footer } from '@/components/sections/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const Index = () => {
   return (
@@ -39,7 +38,6 @@ const Index = () => {
       <Footer />
       <FloatingWhatsApp />
       <ScrollToTop />
-      <SpeedInsights />
     </div>
   );
 };
