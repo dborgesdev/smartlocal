@@ -3,7 +3,6 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from '@/components/ui/MessageCircle';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import logo from '@/assets/logo-smart-local.png';
 
 const navLinks = [
   { label: 'Soluções', target: '#solucoes' },
@@ -46,7 +45,7 @@ export function Header() {
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
           <img 
-            src={logo} 
+            src="/assets/logo-smart-local.webp" 
             alt="Smart Local - Lupa com Gráfico de Crescimento" 
             className="h-16 w-auto"
           />

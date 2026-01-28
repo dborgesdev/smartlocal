@@ -1,5 +1,4 @@
 import { Phone, MapPin } from 'lucide-react';
-import logo from '@/assets/logo-smart-local.png';
 import { MessageCircle } from '../ui/MessageCircle';
 import { InstagramIcon } from '@/components/ui/InstagramIcon';
 
@@ -11,7 +10,7 @@ export function Footer() {
           {/* Company Info */}
           <div>
             <img 
-              src={logo} 
+              src="/assets/logo-smart-local.webp"
               alt="Smart Local" 
               className="h-16 w-auto mb-4 brightness-0 invert opacity-80"
             />
