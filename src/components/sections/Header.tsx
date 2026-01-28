@@ -48,6 +48,8 @@ export function Header() {
             src="/assets/logo-smart-local.webp" 
             alt="Smart Local - Lupa com Gráfico de Crescimento" 
             className="h-16 w-auto"
+            width={171}
+            height={64}
           />
         </a>
 

@@ -48,6 +48,7 @@ export function FloatingWhatsApp() {
                   <button
                     onClick={() => setShowTooltip(false)}
                     className="ml-2 text-muted-foreground hover:text-foreground"
+                    aria-label="Fechar mensagem"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -65,6 +66,7 @@ export function FloatingWhatsApp() {
             href="https://wa.me/5543991364545?text=Olá,%20preciso%20de%20ajuda%20com%20o%20Google%20da%20minha%20empresa."
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Abrir WhatsApp para contato"
             className="group flex items-center justify-center w-16 h-16 bg-whatsapp hover:bg-whatsapp-dark rounded-full shadow-lift transition-all duration-300 hover:scale-110"
             onMouseEnter={() => setShowTooltip(true)}
           >

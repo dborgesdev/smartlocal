@@ -13,6 +13,8 @@ export function Footer() {
               src="/assets/logo-smart-local.webp"
               alt="Smart Local" 
               className="h-16 w-auto mb-4 brightness-0 invert opacity-80"
+              width={171}
+              height={64}
             />
             <p className="text-white/60 leading-relaxed">
               Soluções de visibilidade digital para negócios locais.
@@ -21,7 +23,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-heading font-semibold text-white mb-4">Contato</h4>
+            <h3 className="font-heading font-semibold text-white mb-4">Contato</h3>
             <div className="space-y-3">
               <a 
                 href="tel:+5543991364545" 
@@ -39,12 +41,13 @@ export function Footer() {
 
           {/* Social Links */}
           <div>
-            <h4 className="font-heading font-semibold text-white mb-4">Redes Sociais</h4>
+            <h3 className="font-heading font-semibold text-white mb-4">Redes Sociais</h3>
             <div className="flex gap-4">
               <a
                 href="https://www.instagram.com/smartlocal.com.br"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Siga-nos no Instagram"
                 className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors"
               >
                 <InstagramIcon className="w-5 h-5 text-white" />
@@ -53,6 +56,7 @@ export function Footer() {
                 href="https://wa.me/5543991364545"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Fale conosco no WhatsApp"
                 className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-whatsapp transition-colors"
               >
                 <MessageCircle className="w-5 h-5 text-white" />
@@ -65,7 +69,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 text-center">
-          <p className="text-white/40 text-sm">
+          <p className="text-white/60 text-sm">
             © {new Date().getFullYear()} Smart Local. Todos os direitos reservados.
           </p>
         </div>

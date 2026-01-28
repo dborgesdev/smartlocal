@@ -1,31 +1,52 @@
-import { useEffect, useState, useRef, RefObject } from 'react';
+import { useEffect, useState, useRef, RefObject, useCallback } from 'react';
 
 export function useParallax(speed: number = 0.5): { ref: RefObject<HTMLDivElement>; offset: number } {
   const ref = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
+  const rafId = useRef<number | null>(null);
+  const ticking = useRef(false);
+
+  const updateOffset = useCallback(() => {
+    if (!ref.current) {
+      ticking.current = false;
+      return;
+    }
+
+    const rect = ref.current.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Calculate how far the element is from the center of the viewport
+    const elementCenter = rect.top + rect.height / 2;
+    const viewportCenter = windowHeight / 2;
+    const distanceFromCenter = elementCenter - viewportCenter;
+    
+    // Apply parallax effect
+    const parallaxOffset = distanceFromCenter * speed * -1;
+    setOffset(parallaxOffset);
+    ticking.current = false;
+  }, [speed]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!ref.current) return;
-
-      const rect = ref.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculate how far the element is from the center of the viewport
-      const elementCenter = rect.top + rect.height / 2;
-      const viewportCenter = windowHeight / 2;
-      const distanceFromCenter = elementCenter - viewportCenter;
-      
-      // Apply parallax effect
-      const parallaxOffset = distanceFromCenter * speed * -1;
-      setOffset(parallaxOffset);
+      // Prevent multiple RAF calls - reduces forced reflows
+      if (!ticking.current) {
+        ticking.current = true;
+        rafId.current = requestAnimationFrame(updateOffset);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial calculation
+    
+    // Initial calculation with RAF
+    rafId.current = requestAnimationFrame(updateOffset);
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [speed]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
+  }, [updateOffset]);
 
   return { ref, offset };
 }

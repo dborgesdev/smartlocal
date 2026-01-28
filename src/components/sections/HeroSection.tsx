@@ -3,7 +3,9 @@ import { ArrowDown, MapPin, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle } from '@/components/ui/MessageCircle';
-import heroBG from '@/assets/hero-background.webp';
+
+// Use public path for LCP image - makes it discoverable in initial HTML for better performance
+const heroBG = 'assets/hero-background.webp';
 
 export function HeroSection() {
     return (
