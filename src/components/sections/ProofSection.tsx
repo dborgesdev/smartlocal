@@ -1,11 +1,17 @@
 import { motion } from 'framer-motion';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import {   Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 import TourPublicado from '@/assets/print-360-publicadas.webp';
 import AntesDepois from '@/assets/antes-depois-perfil-google.webp';
 import MetricasPerfil from '@/assets/print-metricas-perfil-google.webp';
 
+// Lazy load carousel to prevent forced reflow on initial page load
+const Carousel = lazy(() => import('@/components/ui/carousel').then(m => ({ default: m.Carousel })));
+const CarouselContent = lazy(() => import('@/components/ui/carousel').then(m => ({ default: m.CarouselContent })));
+const CarouselItem = lazy(() => import('@/components/ui/carousel').then(m => ({ default: m.CarouselItem })));
+const CarouselNext = lazy(() => import('@/components/ui/carousel').then(m => ({ default: m.CarouselNext })));
+const CarouselPrevious = lazy(() => import('@/components/ui/carousel').then(m => ({ default: m.CarouselPrevious })));
 const proofItems = [
   {
     type: 'result',
@@ -27,8 +33,33 @@ const proofItems = [
   },
 ];
 
+// Fallback for carousel while loading
+const CarouselFallback = () => (
+  <div className="w-full max-w-sm mx-auto">
+    <Card className="border-border">
+      <CardContent className="p-4">
+        <div className="aspect-video rounded-lg bg-muted flex items-center justify-center mb-4" />
+        <div className="h-5 bg-muted rounded w-3/4 mb-2" />
+        <div className="h-4 bg-muted rounded w-1/2" />
+      </CardContent>
+    </Card>
+  </div>
+);
+
 export function ProofSection() {
   const { ref, isVisible } = useScrollAnimation<HTMLDivElement>();
+   // Delay carousel mount to prevent forced reflow from embla measuring DOM synchronously
+  const [shouldMountCarousel, setShouldMountCarousel] = useState(false);
+
+  useEffect(() => {
+    if (isVisible && !shouldMountCarousel) {
+      // Use requestAnimationFrame to defer carousel mount to next paint cycle
+      const rafId = requestAnimationFrame(() => {
+        setShouldMountCarousel(true);
+      });
+      return () => cancelAnimationFrame(rafId);
+    }
+  }, [isVisible, shouldMountCarousel]);
 
   return (
     <section className="py-12 md:py-24 bg-background" ref={ref}>
@@ -47,40 +78,52 @@ export function ProofSection() {
           </p>
         </motion.div>
 
-        {/* Mobile Carousel */}
+         {/* Mobile Carousel - Deferred mount to prevent forced reflow */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="md:hidden"
+           style={{ 
+            contain: 'layout style paint',
+            contentVisibility: 'auto',
+            containIntrinsicSize: '0 400px'
+          }}
         >
-          <Carousel className="w-full max-w-sm mx-auto">
-            <CarouselContent>
-              {proofItems.map((item, index) => (
-                <CarouselItem key={index}>
-                  <Card className="border-border">
-                    <CardContent className="p-4">
-                      <div className="aspect-video rounded-lg bg-muted flex items-center justify-center mb-4 overflow-hidden">
-                          <img 
-                            src={item.image} 
-                            alt={item.description} 
-                            className="w-full h-full object-cover"
-                          />
-                      </div>
-                      <h3 className="font-heading font-semibold text-foreground mb-1">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-2" />
-            <CarouselNext className="right-2" />
-          </Carousel>
+          {shouldMountCarousel ? (
+            <Suspense fallback={<CarouselFallback />}>
+              <Carousel className="w-full max-w-sm mx-auto">
+                <CarouselContent>
+                  {proofItems.map((item, index) => (
+                    <CarouselItem key={index}>
+                      <Card className="border-border">
+                        <CardContent className="p-4">
+                          <div className="aspect-video rounded-lg bg-muted flex items-center justify-center mb-4 overflow-hidden">
+                              <img 
+                                src={item.image} 
+                                alt={item.description} 
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
+                          </div>
+                          <h3 className="font-heading font-semibold text-foreground mb-1">
+                            {item.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {item.description}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2" />
+                <CarouselNext className="right-2" />
+              </Carousel>
+            </Suspense>
+          ) : (
+            <CarouselFallback />
+          )}
         </motion.div>
 
         {/* Desktop Grid */}
@@ -99,6 +142,7 @@ export function ProofSection() {
                       src={item.image} 
                       alt={item.description} 
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                   <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
