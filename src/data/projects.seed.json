@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "kasco-aeronautical",
+    "title": "Kasco Aeronautical",
+    "category": "Institucional",
+    "featured": true,
+    "order": 1,
+    "repository": "https://github.com/dborgesdev/kascoaeronautical",
+    "website": "https://kasco.com.br/",
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  },
+  {
+    "slug": "ricardo-peccher",
+    "title": "Ricardo Peccher",
+    "category": "Institucional",
+    "featured": true,
+    "order": 2,
+    "repository": "https://github.com/dborgesdev/ricardopeccher",
+    "website": null,
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  },
+  {
+    "slug": "kompetens",
+    "title": "Kompetens",
+    "category": "Institucional",
+    "featured": true,
+    "order": 3,
+    "repository": "https://github.com/dborgesdev/kompetens",
+    "website": null,
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  },
+  {
+    "slug": "auto-executivo",
+    "title": "Auto Executivo",
+    "category": "Landing Pages",
+    "featured": true,
+    "order": 4,
+    "repository": "https://github.com/dborgesdev/autoexecutivo",
+    "website": "https://autoexecutivo.com.br/",
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  },
+  {
+    "slug": "fabio-moura-corretor",
+    "title": "Fabio Moura Corretor",
+    "category": "Institucional",
+    "featured": true,
+    "order": 5,
+    "repository": "https://github.com/dborgesdev/fabiomouracorretor",
+    "website": "https://fabiomouracorretor.vercel.app/",
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  },
+  {
+    "slug": "mary-fashion",
+    "title": "Mary Fashion",
+    "category": "E-commerce",
+    "featured": true,
+    "order": 6,
+    "repository": "https://github.com/dborgesdev/maryfashion",
+    "website": null,
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  },
+  {
+    "slug": "moan-place",
+    "title": "Moan Place",
+    "category": "Institucional",
+    "featured": true,
+    "order": 7,
+    "repository": "https://github.com/dborgesdev/moanplace",
+    "website": null,
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  },
+  {
+    "slug": "a7-jovem-guarda-fm",
+    "title": "A7 Jovem Guarda FM",
+    "category": "Rádio/Entretenimento",
+    "featured": true,
+    "order": 8,
+    "repository": "https://github.com/dborgesdev/a7jovemguardafm",
+    "website": "https://a7jovemguardafm.grupoj1.com.br/",
+    "websiteVerified": false,
+    "media": {
+      "desktopPoster": null,
+      "mobilePoster": null,
+      "desktopVideo": null,
+      "mobileVideo": null
+    },
+    "summary": null,
+    "status": "awaiting-media-and-validation"
+  }
+]

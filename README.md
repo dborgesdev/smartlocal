@@ -1,73 +1,37 @@
-# Welcome to your Lovable project
+# Smart Local — V1
 
-## Project info
+Rebranding do site em React + TypeScript + Vite + Tailwind. A especificação aprovada está em [docs/project.md](docs/project.md); leia também os documentos complementares e `AGENTS.md` antes de alterar o projeto.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Executar localmente
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+O desenvolvimento usa `http://127.0.0.1:8080`. Para escolher outra porta no Windows: `node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 8081`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+npm run typecheck
+npm run lint
+npm test
+npm run build
+npm run check:assets
+npm run preview
+```
 
-**Use GitHub Codespaces**
+O build gera `dist/`, HTML pré-renderizado para home, catálogo e oito cases, sitemap e imagem social. A prévia de produção usa `http://127.0.0.1:4173`. O aplicativo continua sendo uma SPA com navegação React Router. Vercel está preparada em `vercel.json`; publicação não foi efetuada.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Conteúdo e mídia
 
-## What technologies are used for this project?
+- `src/data/projects.seed.json`: seleção editorial única dos oito projetos, ordem, categorias e verificação de URLs.
+- `src/data/projects.ts`: manifesto tipado de mídia, segmentos e cores.
+- `public/brand`: vetores originais preservados.
+- `public/portfolio/<slug>`: capturas e vídeos recebidos com o checkout, além das instruções por projeto.
+- Se faltar mídia, o site apresenta composição editorial. Vídeos só são carregados no case após solicitação de reprodução.
+- URL ao vivo só aparece com `websiteVerified=true` após conferência manual.
+- O formulário prepara mensagem para WhatsApp; não há armazenamento nem backend de contato.
 
-This project is built with:
+Detalhes da reconstrução e pendências em [docs/implementation-v1.md](docs/implementation-v1.md). Validações em [docs/validation-v1.md](docs/validation-v1.md).
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+V1 desenvolvida na branch `feat/smartlocal-rebranding`. Commit, push e integração à main autorizados pelo proprietário após a revisão local. Site anterior preservado no histórico Git.

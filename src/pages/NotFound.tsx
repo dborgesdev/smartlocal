@@ -1,24 +1,30 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-
-const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+import Page from "@/components/layout/Page";
+export default function NotFound() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
-      </div>
-    </div>
+    <Page
+      title="Página não encontrada | Smart Local"
+      description="Esta página não foi encontrada. Conheça os projetos da Smart Local."
+      notFound
+    >
+      <section className="not-found section-shell">
+        <span className="error-number" aria-hidden="true">
+          404<span className="coral">↗</span>
+        </span>
+        <h1>
+          Fora do roteiro.
+          <br />
+          <em>Vamos voltar?</em>
+        </h1>
+        <p>
+          Esta página não está por aqui. Há boas ideias esperando por você no
+          início.
+        </p>
+        <Link className="button button-coral" to="/">
+          Voltar ao início <ArrowUpRight size={18} />
+        </Link>
+      </section>
+    </Page>
   );
-};
-
-export default NotFound;
+}

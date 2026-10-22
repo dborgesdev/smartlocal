@@ -1,5 +1,9 @@
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(<App />);
+const root = document.getElementById("root")!;
+const path = window.location.pathname.replace(/\/$/, "") || "/";
+if (root.hasChildNodes() && root.dataset.route === path)
+  hydrateRoot(root, <App />);
+else createRoot(root).render(<App />);
