@@ -2,19 +2,20 @@ import { useRef } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import FluidHero from "@/components/effects/FluidHero";
 import HeroMotion from "@/components/effects/HeroMotion";
+import BrandIntro from "@/components/effects/BrandIntro";
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   return (
     <section className="hero" ref={ref} aria-labelledby="hero-title">
       <FluidHero />
-      <HeroMotion target={ref} />
-      <div className="hero-top eyebrow">
+      <HeroMotion target={ref} /><BrandIntro target={ref} />
+      <div className="hero-top eyebrow hero-reveal">
         <span>
           <i className="status-dot" /> CREATIVE WEB DEVELOPMENT
         </span>
         <span>ESTRATÉGIA QUE GANHA FORMA.</span>
       </div>
-      <div className="hero-content">
+      <div className="hero-content hero-reveal">
         <p className="eyebrow hero-kicker">O COMUM NÃO É O SEU LUGAR.</p>
         <h1 id="hero-title">
           {"Sua marca merece mais que um site. Merece"
@@ -34,7 +35,7 @@ export default function Hero() {
           Conheça nossos projetos <ArrowUpRight size={18} />
         </a>
       </div>
-      <div className="hero-bottom">
+      <div className="hero-bottom hero-reveal">
         <a
           href="#projetos"
           className="scroll-cue"

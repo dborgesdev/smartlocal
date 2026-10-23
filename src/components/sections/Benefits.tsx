@@ -38,10 +38,10 @@ export default function Benefits() {
       </h2>
       <div className="benefits-track" ref={ref}>
         {benefits.map(([title, description], index) => (
-          <OpticalGlassCard index={index} key={title}>
+          <div className="benefit-flight" key={title}><OpticalGlassCard index={index}>
             <h3>{title}</h3>
             <p>{description}</p>
-          </OpticalGlassCard>
+          </OpticalGlassCard></div>
         ))}
       </div>
       <BenefitsMotion target={ref} />

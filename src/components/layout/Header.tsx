@@ -14,7 +14,18 @@ export default function Header() {
       </Link>
       <nav className="desktop-nav" aria-label="Navegação principal">
         {navigation.map((item) => (
-          <Link key={item.label} to={item.href}>
+          <Link
+            key={item.label}
+            to={item.href}
+            onClick={() => {
+              if (item.href === "/") {
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }
+            }}
+          >
             {item.label}
           </Link>
         ))}
