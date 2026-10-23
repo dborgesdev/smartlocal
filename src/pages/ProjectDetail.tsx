@@ -4,6 +4,7 @@ import { projects } from "@/data/projects";
 import { projectMessage, whatsappUrl } from "@/lib/whatsapp";
 import Page from "@/components/layout/Page";
 import ProjectViewer from "@/components/portfolio/ProjectViewer";
+import NextProject from "@/components/portfolio/NextProject";
 import NotFound from "./NotFound";
 export default function ProjectDetail() {
   const { slug } = useParams();
@@ -34,7 +35,7 @@ export default function ProjectDetail() {
           </span>
         </div>
         <ProjectViewer key={project.slug} project={project} />
-        <div className="case-info">
+        <div className="case-info" id="detalhes-do-projeto">
           <h2>
             Uma presença.
             <br />
@@ -78,13 +79,7 @@ export default function ProjectDetail() {
             </a>
           )}
         </div>
-        <Link className="next-project" to={`/projetos/${next.slug}`}>
-          <span className="eyebrow">PRÓXIMO PROJETO</span>
-          <span>
-            {next.title}
-            <ArrowUpRight />
-          </span>
-        </Link>
+        <NextProject project={next} />
       </section>
     </Page>
   );

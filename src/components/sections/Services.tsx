@@ -9,7 +9,7 @@ export default function Services() {
       aria-labelledby="services-title"
     >
       <div className="section-meta eyebrow">
-        <span>03 / O QUE PODEMOS CRIAR</span>
+        <span>O QUE PODEMOS CRIAR</span>
         <span>SEU PRÓXIMO CAPÍTULO COMEÇA AQUI.</span>
       </div>
       <div className="services-intro">
@@ -26,7 +26,14 @@ export default function Services() {
       </div>
       <div className="services-list">
         {services.map((service, index) => (
-          <article className="service-row" key={service.title}>
+          <a
+            className="service-row"
+            key={service.title}
+            href={whatsappUrl(service.message)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Solicitar orçamento: ${service.title}`}
+          >
             <span className="eyebrow">0{index + 1}</span>
             <div>
               <span className="eyebrow service-tag">{service.tag}</span>
@@ -34,7 +41,7 @@ export default function Services() {
             </div>
             <p>{service.description}</p>
             <ArrowUpRight className="service-arrow" aria-hidden="true" />
-          </article>
+          </a>
         ))}
       </div>
       <a

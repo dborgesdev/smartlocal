@@ -825,42 +825,6 @@ section[id] {
   color: #c5c8d6;
   letter-spacing: 0.1em;
 }
-.glass-optic {
-  height: 140px;
-  position: relative;
-  perspective: 700px;
-  display: grid;
-  place-items: center;
-}
-.glass-optic i {
-  width: 78px;
-  height: 78px;
-  border: 1px solid #c4c9ff88;
-  border-radius: 19px;
-  position: absolute;
-  transform: rotateX(25deg) rotateY(35deg) rotateZ(-25deg);
-  background: linear-gradient(140deg, #c6c2ff55, #455bed11);
-  box-shadow:
-    5px 12px 20px #0003,
-    inset 1px 1px 10px #ffffff12;
-}
-.glass-optic i:nth-child(2) {
-  margin: 12px 0 0 -24px;
-  opacity: 0.6;
-}
-.glass-optic i:nth-child(3) {
-  margin: 24px 0 0 -48px;
-  opacity: 0.3;
-}
-.glass-card:nth-child(2) .glass-optic i {
-  border-radius: 50%;
-}
-.glass-card:nth-child(3) .glass-optic i {
-  border-radius: 50% 15%;
-}
-.glass-card:nth-child(4) .glass-optic i {
-  transform: rotateX(35deg) rotateY(-25deg) rotateZ(35deg);
-}
 .glass-card h3 {
   font-size: 23px;
   letter-spacing: -0.045em;
@@ -1400,9 +1364,6 @@ section[id] {
   .glass-card {
     padding: 25px;
   }
-  .glass-optic {
-    height: 120px;
-  }
   .contact-grid {
     gap: 7%;
   }
@@ -1634,13 +1595,6 @@ section[id] {
     margin-top: 35px;
     gap: 14px;
   }
-  .glass-optic {
-    height: 110px;
-  }
-  .glass-optic i {
-    width: 60px;
-    height: 60px;
-  }
   .contact-heading {
     min-height: 0;
     margin-bottom: 40px;
@@ -1857,12 +1811,6 @@ section[id] {
   .glass-index {
     grid-column: 1;
   }
-  .glass-optic {
-    grid-column: 2;
-    grid-row: 1/4;
-    height: 100%;
-    min-height: 100px;
-  }
   .glass-card h3 {
     grid-column: 1;
     font-size: 24px;
@@ -1871,10 +1819,6 @@ section[id] {
   .glass-card p {
     grid-column: 1;
     font-size: 12px;
-  }
-  .glass-optic i {
-    width: 56px;
-    height: 56px;
   }
   .contact-heading h2 {
     font-size: 9vw;

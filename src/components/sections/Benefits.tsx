@@ -28,7 +28,7 @@ export default function Benefits() {
       aria-labelledby="benefits-title"
     >
       <div className="section-meta eyebrow">
-        <span>04 / MAIS QUE APARÊNCIA</span>
+        <span>MAIS QUE APARÊNCIA</span>
         <span>O DETALHE FAZ A DIFERENÇA.</span>
       </div>
       <h2 id="benefits-title">

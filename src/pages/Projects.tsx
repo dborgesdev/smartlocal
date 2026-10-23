@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import Page from "@/components/layout/Page";
 import ProjectFilters from "@/components/portfolio/ProjectFilters";
 import ProjectCard from "@/components/portfolio/ProjectCard";
-import PortfolioSpiral from "@/components/effects/PortfolioSpiral";
+import CatalogParchmentMotion from "@/components/effects/CatalogParchmentMotion";
 import { projects } from "@/data/projects";
 export default function Projects() {
   const [category, setCategory] = useState("Todos");
@@ -40,12 +40,16 @@ export default function Projects() {
           {filtered.length} {filtered.length === 1 ? "PROJETO" : "PROJETOS"} /{" "}
           {category.toUpperCase()}
         </p>
-        <div className="project-grid" ref={ref} key={category}>
-          {filtered.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+        <div className="catalog-sheet" ref={ref} key={category}>
+          {Array.from({ length: Math.ceil(filtered.length / 2) }, (_, row) => (
+            <div className="catalog-row" key={row}>
+              {filtered.slice(row * 2, row * 2 + 2).map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
           ))}
         </div>
-        <PortfolioSpiral key={`motion-${category}`} target={ref} />
+        <CatalogParchmentMotion key={`motion-${category}`} target={ref} />
       </section>
     </Page>
   );

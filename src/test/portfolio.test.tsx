@@ -1,4 +1,10 @@
-import { render, screen, fireEvent, renderHook, act } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  renderHook,
+  act,
+} from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import { projects } from "@/data/projects";
@@ -8,19 +14,28 @@ import ProjectViewer from "@/components/portfolio/ProjectViewer";
 import ProjectCard from "@/components/portfolio/ProjectCard";
 import Contact from "@/components/sections/Contact";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import Services from "@/components/sections/Services";
+import { navigation } from "@/data/navigation";
 
 describe("Portfólio e contato", () => {
-  it('acompanha a preferência de redução de movimento e libera seu listener', () => {
+  it("acompanha a preferência de redução de movimento e libera seu listener", () => {
     const listeners = new Set<() => void>();
     const media = {
       matches: true,
-      addEventListener: (_event: string, listener: () => void) => listeners.add(listener),
-      removeEventListener: (_event: string, listener: () => void) => listeners.delete(listener),
+      addEventListener: (_event: string, listener: () => void) =>
+        listeners.add(listener),
+      removeEventListener: (_event: string, listener: () => void) =>
+        listeners.delete(listener),
     };
-    const mock = vi.spyOn(window, 'matchMedia').mockReturnValue(media as unknown as MediaQueryList);
+    const mock = vi
+      .spyOn(window, "matchMedia")
+      .mockReturnValue(media as unknown as MediaQueryList);
     const { result, unmount } = renderHook(useReducedMotion);
     expect(result.current).toBe(true);
-    act(() => { media.matches = false; listeners.forEach(listener => listener()); });
+    act(() => {
+      media.matches = false;
+      listeners.forEach((listener) => listener());
+    });
     expect(result.current).toBe(false);
     unmount();
     expect(listeners.size).toBe(0);
@@ -77,7 +92,13 @@ describe("Portfólio e contato", () => {
         mobileVideo: null,
       },
     };
-    render(<ProjectViewer project={project} />);
+    render(
+      <MemoryRouter
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
+        <ProjectViewer project={project} />
+      </MemoryRouter>,
+    );
     expect(
       screen.getByText("Apresentação visual em preparação."),
     ).toBeInTheDocument();
@@ -90,26 +111,77 @@ describe("Portfólio e contato", () => {
       "true",
     );
   });
-  it("carrega vídeo apenas após pedido e desmonta ao trocar formato", () => {
+  it("carrega somente a mídia próxima e troca formato sem autoplay ou loop concorrente", () => {
+    const originalObserver = window.IntersectionObserver;
+    class NearObserver {
+      callback: IntersectionObserverCallback;
+      constructor(callback: IntersectionObserverCallback) {
+        this.callback = callback;
+      }
+      observe(target: Element) {
+        this.callback(
+          [{ isIntersecting: true, target } as IntersectionObserverEntry],
+          this as unknown as IntersectionObserver,
+        );
+      }
+      unobserve() {}
+      disconnect() {}
+    }
+    vi.stubGlobal("IntersectionObserver", NearObserver);
     const pause = vi
       .spyOn(HTMLMediaElement.prototype, "pause")
       .mockImplementation(() => {});
-    const { container } = render(<ProjectViewer project={projects[0]} />);
-    expect(container.querySelector("video")).toBeNull();
-    fireEvent.click(
-      screen.getByRole("button", { name: "Reproduzir gravação" }),
+    const { container, unmount } = render(
+      <MemoryRouter
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
+        <ProjectViewer project={projects[0]} />
+      </MemoryRouter>,
     );
     expect(container.querySelector("video")?.getAttribute("src")).toContain(
       "desktop.mp4",
     );
+    expect(container.querySelector("video")).not.toHaveAttribute("autoplay");
+    expect(container.querySelector("video")).not.toHaveAttribute("loop");
+    fireEvent.click(
+      screen.getByRole("button", { name: "Assistir com controles" }),
+    );
+    expect(container.querySelector("video")).toHaveAttribute("controls");
     fireEvent.click(screen.getByRole("button", { name: "Mobile" }));
     expect(pause).toHaveBeenCalled();
-    expect(container.querySelector("video")).toBeNull();
+    expect(container.querySelector("video")?.getAttribute("src")).toContain(
+      "mobile.mp4",
+    );
+    expect(container.querySelectorAll("video")).toHaveLength(1);
     expect(screen.getByRole("img")).toHaveAttribute(
       "src",
       projects[0].media.mobilePoster,
     );
+    fireEvent.error(container.querySelector("video")!);
+    expect(container.querySelector("video")).toBeNull();
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "A gravação está indisponível",
+    );
+    expect(container.querySelector(".pin-spacer")).toBeNull();
+    unmount();
     pause.mockRestore();
+    vi.stubGlobal("IntersectionObserver", originalObserver);
+  });
+  it("direciona todos os menus ao catálogo e oferece quatro mensagens de serviço distintas", () => {
+    expect(navigation.find((item) => item.label === "Projetos")?.href).toBe(
+      "/projetos",
+    );
+    render(<Services />);
+    const links = screen.getAllByRole("link", { name: /Solicitar orçamento:/ });
+    const messages = links.map((link) => {
+      const url = new URL(link.getAttribute("href")!);
+      expect(url.pathname).toBe("/5543991364545");
+      return url.searchParams.get("text");
+    });
+    expect(new Set(messages).size).toBe(4);
+    expect(messages.every((message) => message?.includes("Smart Local"))).toBe(
+      true,
+    );
   });
   it("usa composição editorial quando uma captura falha", () => {
     render(
@@ -139,6 +211,7 @@ describe("Portfólio e contato", () => {
     );
     expect(open).not.toHaveBeenCalled();
     expect(screen.getByRole("alert")).toHaveTextContent("Informe seu nome");
+    expect(screen.getByLabelText("Como podemos chamar você?")).toHaveFocus();
     fireEvent.change(screen.getByLabelText("Como podemos chamar você?"), {
       target: { value: "João" },
     });

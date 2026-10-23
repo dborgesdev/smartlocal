@@ -76,10 +76,6 @@ export default function MobileDrawer({
               <ArrowUpRight />
             </Link>
           ))}
-          <Link to="/projetos" onClick={() => dialogRef.current?.close()}>
-            <small>05</small>Todos os projetos
-            <ArrowUpRight />
-          </Link>
         </nav>
         <a
           className="text-link"
