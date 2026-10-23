@@ -53,7 +53,17 @@ describe("Portfólio e contato", () => {
       "a7-jovem-guarda-fm",
     ]);
     expect(new Set(projects.map((project) => project.slug)).size).toBe(8);
-    expect(projects.every((project) => !project.websiteVerified)).toBe(true);
+    expect(projects.every((project) => project.websiteVerified && project.website?.startsWith("https://"))).toBe(true);
+  });
+  it("oferece o site confirmado em nova aba e omite o CTA sem confirmação", () => {
+    const content = (verified: boolean) => <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><ProjectViewer project={{...projects[0], websiteVerified: verified}} /></MemoryRouter>;
+    const { rerender } = render(content(true));
+    const link = screen.getByRole("link", {name: /Ver site ao vivo/});
+    expect(link).toHaveAttribute("href", "https://kasco.com.br/");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    rerender(content(false));
+    expect(screen.queryByRole("link", {name: /Ver site ao vivo/})).not.toBeInTheDocument();
   });
   it("codifica mensagens com acentos e caracteres especiais sem alterar o destinatário", () => {
     const message = formMessage(
