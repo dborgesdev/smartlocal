@@ -2,21 +2,32 @@ import { useRef, useState, type FormEvent } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { formMessage, whatsappUrl } from "@/lib/whatsapp";
 import ContactMotion from "@/components/effects/ContactMotion";
+import ContactFormMotion from "@/components/effects/ContactFormMotion";
 export default function Contact() {
   const ref = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const [error, setError] = useState("");
+  const [invalid, setInvalid] = useState({ name: false, description: false });
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const name = String(data.get("name") || "").trim();
     const description = String(data.get("description") || "").trim();
     if (name.length < 2 || description.length < 10) {
+      setInvalid({
+        name: name.length < 2,
+        description: description.length < 10,
+      });
       setError(
         "Informe seu nome (ao menos 2 caracteres) e conte um pouco mais sobre o projeto (ao menos 10 caracteres).",
       );
+      formRef.current
+        ?.querySelector<HTMLElement>(name.length < 2 ? "#name" : "#description")
+        ?.focus();
       return;
     }
     setError("");
+    setInvalid({ name: false, description: false });
     window.open(
       whatsappUrl(formMessage(name, description)),
       "_blank",
@@ -30,7 +41,7 @@ export default function Contact() {
       aria-labelledby="contact-title"
     >
       <div className="section-meta eyebrow">
-        <span>05 / VAMOS CONVERSAR</span>
+        <span>VAMOS CONVERSAR</span>
         <span>O PRÓXIMO PROJETO PODE SER O SEU.</span>
       </div>
       <div className="contact-heading" ref={ref}>
@@ -56,7 +67,7 @@ export default function Contact() {
             <i className="status-dot" /> UMA BOA CONVERSA MUDA TUDO.
           </span>
         </div>
-        <form onSubmit={submit}>
+        <form ref={formRef} className="contact-panel" onSubmit={submit}>
           <label htmlFor="name">Como podemos chamar você?</label>
           <input
             id="name"
@@ -67,6 +78,7 @@ export default function Contact() {
             minLength={2}
             maxLength={100}
             aria-describedby={error ? "form-error" : undefined}
+            aria-invalid={invalid.name || undefined}
           />
           <label htmlFor="description">O que você tem em mente?</label>
           <textarea
@@ -78,6 +90,7 @@ export default function Contact() {
             minLength={10}
             maxLength={2000}
             aria-describedby="contact-privacy form-error"
+            aria-invalid={invalid.description || undefined}
           />
           <p id="form-error" role="alert">
             {error}
@@ -94,6 +107,7 @@ export default function Contact() {
           </div>
         </form>
       </div>
+      <ContactFormMotion target={formRef} />
     </section>
   );
 }

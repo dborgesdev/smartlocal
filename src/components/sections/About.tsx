@@ -11,7 +11,7 @@ export default function About() {
     >
       <ManifestoMotion target={ref} />
       <div className="section-meta eyebrow">
-        <span>02 / NOSSA ESSÊNCIA</span>
+        <span>NOSSA ESSÊNCIA</span>
         <span>ALÉM DO ÓBVIO.</span>
       </div>
       <div className="about-orbit" aria-hidden="true">

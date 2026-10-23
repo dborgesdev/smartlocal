@@ -1,5 +1,6 @@
 import type { PointerEvent, ReactNode } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import BenefitObject from "./BenefitObject";
 export default function OpticalGlassCard({
   children,
   index,
@@ -22,11 +23,7 @@ export default function OpticalGlassCard({
       }}
     >
       <span className="glass-index">0{index + 1} /</span>
-      <div className="glass-optic" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </div>
+      <BenefitObject index={index} />
       {children}
     </article>
   );

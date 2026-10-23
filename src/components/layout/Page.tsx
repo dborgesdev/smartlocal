@@ -35,6 +35,10 @@ export default function Page({
         once: true,
       });
       window.addEventListener("keydown", release, { once: true });
+      window.addEventListener("pointerdown", release, {
+        passive: true,
+        once: true,
+      });
       document.fonts.ready.then(alignHash);
     }
     const frame = requestAnimationFrame(() => {
@@ -51,6 +55,7 @@ export default function Page({
       window.removeEventListener("wheel", release);
       window.removeEventListener("touchstart", release);
       window.removeEventListener("keydown", release);
+      window.removeEventListener("pointerdown", release);
     };
   }, [pathname, hash]);
   return (
