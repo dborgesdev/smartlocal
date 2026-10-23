@@ -5,14 +5,27 @@
     <script>
       // Decide once, before the pre-rendered Hero can paint. Storage failure skips motion.
       try {
-        const started = sessionStorage.getItem('smartlocal:session-started');
-        sessionStorage.setItem('smartlocal:session-started', '1');
-        if (!started && location.pathname === '/' && !location.hash && scrollY <= 80 &&
-            !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          document.documentElement.dataset.brandEntry = 'ready';
+        const started = sessionStorage.getItem("smartlocal:session-started");
+        sessionStorage.setItem("smartlocal:session-started", "1");
+        if (
+          !started &&
+          location.pathname === "/" &&
+          !location.hash &&
+          scrollY <= 80 &&
+          !matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          document.documentElement.dataset.brandEntry = "ready";
         }
-      } catch { /* The final Hero is the safe default. */ }
-      window.addEventListener('error', () => { delete document.documentElement.dataset.brandEntry; }, { once: true, capture: true });
+      } catch {
+        /* The final Hero is the safe default. */
+      }
+      window.addEventListener(
+        "error",
+        () => {
+          delete document.documentElement.dataset.brandEntry;
+        },
+        { once: true, capture: true },
+      );
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#14161B" />
@@ -37,7 +50,7 @@
     <meta property="og:locale" content="pt_BR" />
     <meta
       property="og:image"
-      content="https://smartlocal.com.br/og/smartlocal.png"
+      content="https://smartlocal.com.br/og/smartlocal.webp"
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -50,7 +63,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://smartlocal.com.br/og/smartlocal.png"
+      content="https://smartlocal.com.br/og/smartlocal.webp"
     />
     <script type="application/ld+json">
       {
