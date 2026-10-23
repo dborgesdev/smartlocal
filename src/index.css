@@ -2026,3 +2026,27 @@ section[id] {
 .catalog {
   overflow: clip;
 }
+
+/* Intro owns children; ScrollTrigger owns their parents and the hero words. */
+.brand-intro {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  font-family: Manrope, sans-serif;
+  font-weight: 800;
+  font-size: clamp(60px, 16vw, 245px);
+  letter-spacing: -.075em;
+  pointer-events: none;
+  z-index: 2;
+}
+.hero[data-intro="pending"] .brand-intro { display: flex; }
+.hero[data-intro="pending"] :is(.hero-content, .hero-top > *, .hero-bottom > *) { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .hero[data-intro="pending"] :is(.hero-content, .hero-top > *, .hero-bottom > *) { opacity: 1 !important; transform: none !important; }
+  .brand-intro { display: none !important; }
+}
+/* Pre-hydration state comes from the session decision in the document head. */
+html[data-brand-entry="ready"] .hero .brand-intro { display: flex; }
+html[data-brand-entry="ready"] .hero :is(.hero-content,.hero-top > *,.hero-bottom > *) { opacity: 0; }

@@ -792,12 +792,15 @@
 .final-brand {display:inline-flex;align-items:center;gap:9px;width:auto!important;white-space:nowrap}
 .final-brand img {width:36px;height:36px;object-fit:contain;flex-shrink:0}
 .final-brand>span {font-family:Manrope,sans-serif;font-weight:800;font-size:25px;letter-spacing:-1.4px;color:#f2f0eb}
-.brand-intro {display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-family:Manrope,sans-serif;font-weight:800;font-size:clamp(64px,16vw,245px);letter-spacing:-.075em;pointer-events:none;z-index:2}
-.hero[data-intro="pending"] .brand-intro {display:flex}
-.hero[data-intro="pending"] .hero-reveal {opacity:0}
 .benefits-track {perspective:1100px}
 .benefit-flight {min-width:0;transform-style:preserve-3d}
 .benefit-flight .glass-card {height:100%}
 .fluid-canvas {position:absolute;inset:0;width:100%;height:100%}
 canvas.smoke-cursor {width:100%;height:100%;background:none;filter:none;opacity:1;mix-blend-mode:normal;border-radius:0;transition:none}
-@media(prefers-reduced-motion:reduce){.hero[data-intro="pending"] .hero-reveal{opacity:1}.brand-intro{display:none!important}}
+/* Keep brand light visible while the first GPU frame is being prepared. */
+.fluid-hero {
+  background: radial-gradient(ellipse at 15% 30%, #465bee70, transparent 65%),
+    radial-gradient(ellipse at 95% 85%, #ff604660, transparent 60%), #14161b;
+}
+.fluid-canvas { opacity: 0; }
+.fluid-canvas[data-ready="true"] { opacity: 1; }
