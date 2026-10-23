@@ -17,12 +17,18 @@ export default function ProjectDemo({
   source,
   title,
   toolbar,
+  initializing = false,
+  mobilePoster,
+  website,
 }: {
   mode: "desktop" | "mobile";
   poster: string | null;
   source: string | null;
   title: string;
   toolbar: ReactNode;
+  initializing?: boolean;
+  mobilePoster?: string | null;
+  website?: string | null;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -31,15 +37,17 @@ export default function ProjectDemo({
   const percentage = useRef<HTMLSpanElement>(null);
   const reduced = useReducedMotion();
   const [requested, setRequested] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const [duration, setDuration] = useState(0);
+  const [media, setMedia] = useState({ source, ready: false, failed: false, duration: 0 });
+  const ready = media.source === source && media.ready;
+  const failed = media.source === source && media.failed;
+  const duration = media.source === source ? media.duration : 0;
+  const [hasPlayable, setHasPlayable] = useState(false);
   const [manual, setManual] = useState(false);
   const controls = reduced || manual;
   const unavailable = useCallback(() => {
-    setReady(false);
-    setFailed(true);
-  }, []);
+    setMedia({ source, ready: false, failed: true, duration: 0 });
+  }, [source]);
+  useEffect(() => { if (ready) setHasPlayable(true); }, [ready]);
   useEffect(() => {
     if (!source || !root.current) return;
     const observer = new IntersectionObserver(
@@ -52,10 +60,10 @@ export default function ProjectDemo({
     return () => observer.disconnect();
   }, [source]);
   useEffect(() => {
-    if (!requested || ready || failed) return;
-    const timeout = window.setTimeout(() => setFailed(true), 20000);
+    if (!source || !requested || ready || failed) return;
+    const timeout = window.setTimeout(unavailable, 20000);
     return () => clearTimeout(timeout);
-  }, [requested, ready, failed]);
+  }, [requested, ready, failed, source, unavailable]);
   useEffect(() => {
     const element = video.current;
     const pause = () => {
@@ -66,15 +74,15 @@ export default function ProjectDemo({
       element?.pause();
       document.removeEventListener("visibilitychange", pause);
     };
-  }, [requested, failed]);
+  }, [requested, failed, source]);
   return (
-    <div className="project-viewer" ref={root}>
+    <div className="project-viewer" data-initializing={initializing || undefined} ref={root}>
       <div className="viewer-sticky" ref={panel}>
         <div className="viewer-toolbar">
           {toolbar}
           <span className="eyebrow">UM OLHAR MAIS DE PERTO</span>
         </div>
-        <DevicePreview mode={mode} poster={poster} title={title}>
+        <DevicePreview mode={mode} poster={poster} title={title} responsivePoster={initializing ? mobilePoster : undefined}>
           {source && requested && !failed && (
             <video
               ref={video}
@@ -88,14 +96,11 @@ export default function ProjectDemo({
               preload="auto"
               onLoadedMetadata={(event) => {
                 const length = event.currentTarget.duration;
-                if (Number.isFinite(length) && length > 0) setDuration(length);
-                else setFailed(true);
+                if (Number.isFinite(length) && length > 0) setMedia((current) => ({ source, ready: current.source === source && current.ready, failed: false, duration: length }));
+                else unavailable();
               }}
-              onLoadedData={() => setReady(true)}
-              onError={() => {
-                setReady(false);
-                setFailed(true);
-              }}
+              onLoadedData={() => setMedia((current) => ({ ...current, source, ready: true }))}
+              onError={unavailable}
               aria-label={`Gravação ${mode} de ${title}`}
             />
           )}
@@ -113,7 +118,7 @@ export default function ProjectDemo({
                       ? "Use os controles para assistir à gravação."
                       : "Role para explorar o projeto. Volte para rever."}
             </p>
-            {ready && !controls && !failed && (
+            {hasPlayable && !controls && !failed && (
               <div className="demo-progress">
                 <progress
                   ref={progress}
@@ -128,6 +133,7 @@ export default function ProjectDemo({
             )}
           </div>
           <div className="demo-actions">
+            {website && <a className="button button-coral demo-live" href={website} target="_blank" rel="noopener noreferrer">Ver site ao vivo ↗</a>}
             <Link className="text-link" to="/projetos">
               <ArrowLeft size={16} />
               Ver todos os projetos
@@ -154,8 +160,10 @@ export default function ProjectDemo({
         video={video}
         progress={progress}
         percentage={percentage}
+        source={source}
+        ready={ready}
         duration={duration}
-        enabled={ready && !failed && !controls}
+        enabled={hasPlayable && Boolean(source) && !failed && !controls}
         onUnavailable={unavailable}
       />
     </div>

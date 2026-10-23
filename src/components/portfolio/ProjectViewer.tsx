@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useViewerMode } from "@/hooks/useViewerMode";
 import { Monitor, Smartphone } from "lucide-react";
 import type { Project } from "@/types/project";
 import ProjectDemo from "./ProjectDemo";
 export default function ProjectViewer({ project }: { project: Project }) {
-  const [mode, setMode] = useState<"desktop" | "mobile">("desktop");
+  const { mode, initializing, setMode } = useViewerMode();
   return (
     <ProjectDemo
-      key={`${project.slug}-${mode}`}
+      key={project.slug}
+      initializing={initializing}
+      mobilePoster={project.media.mobilePoster}
+      website={project.websiteVerified ? project.website : null}
       mode={mode}
       title={project.title}
       poster={
