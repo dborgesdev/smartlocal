@@ -48,7 +48,7 @@ export default function VideoScrollMotion({
           start: () =>
             `top top+=${(document.querySelector("header")?.getBoundingClientRect().height || 76) + 12}`,
           end: () =>
-            `+=${Math.round(innerHeight * (matchMedia("(pointer: coarse)").matches ? 1.4 : 2))}`,
+            `+=${Math.round(innerHeight * (matchMedia("(pointer: coarse)").matches ? 2.5 : 3.5))}`,
           invalidateOnRefresh: true,
           onUpdate: (self) => update(self.progress),
           onRefresh: (self) => update(self.progress),
