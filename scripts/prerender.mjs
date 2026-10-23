@@ -67,10 +67,10 @@ for (const route of routes) {
     "og:title": route.title,
     "og:description": route.description,
     "og:url": `https://smartlocal.com.br${route.path}`,
-    "og:image": `https://smartlocal.com.br${route.image || "/og/smartlocal.png"}`,
+    "og:image": `https://smartlocal.com.br${route.image || "/og/smartlocal.webp"}`,
     "twitter:title": route.title,
     "twitter:description": route.description,
-    "twitter:image": `https://smartlocal.com.br${route.image || "/og/smartlocal.png"}`,
+    "twitter:image": `https://smartlocal.com.br${route.image || "/og/smartlocal.webp"}`,
     robots: route.notFound ? "noindex, follow" : "index, follow",
   };
   for (const [name, content] of Object.entries(values)) {
