@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 export default function Seo({
   title,
   description,
-  image = "/og/smartlocal.png",
+  image = "/og/smartlocal.webp",
   notFound = false,
 }: {
   title: string;
